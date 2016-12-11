@@ -1,0 +1,2 @@
+kernel/drivers/net/wireless/cnss_prealloc/cnssprealloccore.ko
+kernel/drivers/net/wireless/wcnss/wcnsscore.ko

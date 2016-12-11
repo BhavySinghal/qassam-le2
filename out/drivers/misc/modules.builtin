@@ -1,0 +1,10 @@
+kernel/drivers/misc/apds993x.ko
+kernel/drivers/misc/qseecom.ko
+kernel/drivers/misc/compat_qseecom.ko
+kernel/drivers/misc/hardware_info.ko
+kernel/drivers/misc/type-c-info.ko
+kernel/drivers/misc/type-c_notify.ko
+kernel/drivers/misc/type-c-pericom.ko
+kernel/drivers/misc/type-c-ti.ko
+kernel/drivers/misc/type-c-nxp.ko
+kernel/drivers/misc/uid_cputime.ko

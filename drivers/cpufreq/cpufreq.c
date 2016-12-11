@@ -499,6 +499,9 @@ static ssize_t store_scaling_governor(struct cpufreq_policy *policy,
 	int ret;
 	char	str_governor[16];
 	struct cpufreq_policy new_policy;
+	char *envp[3];
+	char buf1[64];
+	char buf2[64];
 
 	ret = cpufreq_get_policy(&new_policy, policy->cpu);
 	if (ret)
@@ -518,6 +521,13 @@ static ssize_t store_scaling_governor(struct cpufreq_policy *policy,
 	policy->user_policy.governor = policy->governor;
 
 	sysfs_notify(&policy->kobj, NULL, "scaling_governor");
+
+	snprintf(buf1, sizeof(buf1), "GOV=%s", policy->governor->name);
+	snprintf(buf2, sizeof(buf2), "CPU=%u", policy->cpu);
+	envp[0] = buf1;
+	envp[1] = buf2;
+	envp[2] = NULL;
+	kobject_uevent_env(cpufreq_global_kobject, KOBJ_ADD, envp);
 
 	if (ret)
 		return ret;
@@ -1817,6 +1827,22 @@ EXPORT_SYMBOL_GPL(cpufreq_driver_target);
 /*
  * when "event" is CPUFREQ_GOV_LIMITS
  */
+
+int __cpufreq_driver_getavg(struct cpufreq_policy *policy, unsigned int cpu)
+{
+ int ret = 0;
+
+ policy = cpufreq_cpu_get(policy->cpu);
+ if (!policy)
+ return -EINVAL;
+
+ if (cpu_online(cpu) && cpufreq_driver->getavg)
+ ret = cpufreq_driver->getavg(policy, cpu);
+
+ cpufreq_cpu_put(policy);
+ return ret;
+}
+EXPORT_SYMBOL_GPL(__cpufreq_driver_getavg);
 
 static int __cpufreq_governor(struct cpufreq_policy *policy,
 					unsigned int event)

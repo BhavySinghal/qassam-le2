@@ -1,0 +1,2 @@
+kernel/drivers/gpio/qpnp-pin.ko
+kernel/drivers/gpio/maxq656/maxq656.ko
