@@ -37,73 +37,73 @@ Release Date | June 2016
 - Download Toolchains (CAF Toolchains Used Below. Other Toolchains may Cause Problems.)
 
 
-	$ git clone https://source.codeaurora.org/quic/la/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b LA.BR.1.3.5.c1_rb1.3
+		$ git clone https://source.codeaurora.org/quic/la/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b LA.BR.1.3.5.c1_rb1.3
 
 
 
 - Download Kernel Sources
 
 
-	$ git clone https://github.com/BhavySinghal/qassam-le2.git -b stock-6.0
+		$ git clone https://github.com/BhavySinghal/qassam-le2.git -b stock-6.0
 
 
 
 - Change Directory to Kernel Directory and Make Output Folder
 
 
-	$ cd qassam-le2
+		$ cd qassam-le2
 
 
-	$ mkdir out
+		$ mkdir out
 
 
 
 - Prepare Source for Compilation
 
 
-	$ export CROSS_COMPILE=../aarch64-linux-android-4.9/bin/aarch64-linux-android-
+		$ export CROSS_COMPILE=../aarch64-linux-android-4.9/bin/aarch64-linux-android-
 
 
-	$ export ARCH=arm64;
+		$ export ARCH=arm64;
 
 
 
 	Now set how many files to compile at once. This number could be "The Number of Cores in your PC's Processor + 2"
 
 
-	$ export JOBS=8
+		$ export JOBS=8
 
 
 
 - Clean Sources for Building and for Rebuilding
 
 
-	$ make clean
+		$ make clean
 
 
-	$ rm -fdr out
+		$ rm -fdr out
 
 
-	$ mkdir out
+		$ mkdir out
 
 
 
 - Compile the Kernel and Sign the WiFi Module to Fix WiFi Error
 
 
-	$ make s2-qassam_defconfig
+		$ make s2-qassam_defconfig
 
 
-	$ make -j$JOBS
+		$ make -j$JOBS
 
 
-	$ make -j$JOBS KCFLAGS=-mno-android
+		$ make -j$JOBS KCFLAGS=-mno-android
 
 
-	$ make -j$JOBS KCFLAGS=-mno-android modules
+		$ make -j$JOBS KCFLAGS=-mno-android modules
 
 
-	$ scripts/sign_file.sh sha512 ./sign_key.priv ./sign_key.x509 ./drivers/staging/prima/wlan.ko
+		$ scripts/sign_file.sh sha512 ./sign_key.priv ./sign_key.x509 ./drivers/staging/prima/wlan.ko
 
 
 
@@ -121,7 +121,7 @@ Release Date | June 2016
 ---------------
 
 
-# IF YOU WANT THE COMPLETE KERNEL BUILD GUIDE FOR THIS DEVICE, THEN PLEASE CHECK OUT THIS XDA POST: [[ Guide ]Compiling WORKING 64 bit Android Kernel [ Le2 ] [ NOOB Friendly ]](http://forum.xda-developers.com/le-2/how-to/guide-compiling-64-bit-android-kernel-t3512749)
+#### IF YOU WANT THE COMPLETE KERNEL BUILD GUIDE FOR THIS DEVICE, THEN PLEASE CHECK OUT THIS XDA POST: [[Guide]Compiling WORKING 64 bit Android Kernel [Le2] [NOOB Friendly]](http://forum.xda-developers.com/le-2/how-to/guide-compiling-64-bit-android-kernel-t3512749)
 
 
 
